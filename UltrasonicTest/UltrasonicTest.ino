@@ -45,37 +45,44 @@ void loop() {
   long duration = 0;
   float distance = 0.0;
 
-  debugButtonPress(5);
-  // }
-  // lastButtonState = currentButtonState;
+  static bool lastButtonState = HIGH;
+  bool currentButtonState = digitalRead(BUTTON_PIN);
 
-  // if (!test) {
-  //   digitalWrite(TRIG_PIN1, LOW);
-  //   delayMicroseconds(2);
-  //   digitalWrite(TRIG_PIN1, HIGH);
-  //   delayMicroseconds(10);
-  //   digitalWrite(TRIG_PIN1, LOW);
-  //   duration = pulseIn(ECHO_PIN1, HIGH, 30000);
-  //   distance = duration * 0.0343 / 2;
-  // } else {
-  //   digitalWrite(TRIG_PIN2, LOW);
-  //   delayMicroseconds(2);
-  //   digitalWrite(TRIG_PIN2, HIGH);
-  //   delayMicroseconds(10);
-  //   digitalWrite(TRIG_PIN2, LOW);
-  //   duration = pulseIn(ECHO_PIN2, HIGH, 30000);
-  //   distance = duration * 0.0343 / 2;
-  // }
+  if (lastButtonState == HIGH && currentButtonState == LOW) {
+    test = !test;
+    Serial.println(test ? "Switched to Sensor THT" : "Switched to Sensor FLT");
+    delay(50); // debounce
+  }
+  lastButtonState = currentButtonState;
 
-  // String text = String("Dist (") + (test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
-  // int x = (SCREEN_WIDTH - text.length() * 6) / 2;
 
-  // display.clearDisplay();
-  // display.setTextSize(1);
-  // display.setTextColor(SSD1306_WHITE);
-  // display.setCursor(x, 28);
-  // display.print(text);
-  // display.display();
+  if (!test) {
+    digitalWrite(TRIG_PIN1, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIG_PIN1, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG_PIN1, LOW);
+    duration = pulseIn(ECHO_PIN1, HIGH, 30000);
+    distance = duration * 0.0343 / 2;
+  } else {
+    digitalWrite(TRIG_PIN2, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIG_PIN2, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG_PIN2, LOW);
+    duration = pulseIn(ECHO_PIN2, HIGH, 30000);
+    distance = duration * 0.0343 / 2;
+  }
+
+  String text = String("Dist (") + (test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
+  int x = (SCREEN_WIDTH - text.length() * 6) / 2;
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(x, 28);
+  display.print(text);
+  display.display();
 
   delay(250);
 }
