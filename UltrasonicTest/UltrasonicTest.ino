@@ -45,7 +45,7 @@ void loop() {
   long duration = 0;
   float distance = 0.0;
 
-  debugButtonPress(5)
+  debugButtonPress(5);
   // }
   // lastButtonState = currentButtonState;
 
