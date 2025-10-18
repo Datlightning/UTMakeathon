@@ -33,6 +33,7 @@ def home():
 def connect_storage():
     global authenticated
     global PASSWORD
+    flash("")
     if request.method == 'POST':
         password = request.form.get('password')
 
