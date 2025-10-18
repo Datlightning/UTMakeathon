@@ -97,13 +97,16 @@ def handle_esp32_data():
             return "Unauthorized", 401
 
         password = data.get('password')
+        q1 = data.get('q1')
+        q2  = data.get('q2')
         hashed_password = hash_password(password)
         db_data = get_data()
+        print(q1, q2)
         if hashed_password not in db_data:
             return "Unauthorized", 401
         # Update container data sent by ESP32
-        containers_data = data.get('containers', [])
-        db_data[hashed_password]['containers'] = containers_data
+        db_data[hashed_password]['containers'][0]['item'][0]['quantity'] = int(q1)
+        db_data[hashed_password]['containers'][1]['item'][0]['quantity'] = int(q2)
         save_data(db_data)
         return "Data received", 200
 
@@ -115,6 +118,7 @@ def handle_esp32_data():
         hashed_password = hash_password(password)
 
         db_data = get_data()
+        
         user_data = db_data.get(hashed_password, {'containers': [], 'notifications': {}})
         return jsonify(user_data['containers'])
 

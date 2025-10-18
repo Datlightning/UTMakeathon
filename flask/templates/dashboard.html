@@ -100,45 +100,54 @@
     </main>
 
     <script>
-        // Render bar graphs for each container
-        document.querySelectorAll('.item-bar-graph').forEach(canvas => {
-            const containerDiv = canvas.closest('div[data-items]');
-            const items = JSON.parse(containerDiv.dataset.items);
-            const threshold = parseFloat(containerDiv.dataset.threshold);
+    // Render bar graphs for each container
+    document.querySelectorAll('.item-bar-graph').forEach(canvas => {
+        const containerDiv = canvas.closest('div[data-items]');
+        const items = JSON.parse(containerDiv.dataset.items);
+        const threshold = parseFloat(containerDiv.dataset.threshold);
 
-            const labels = items.map(item => item.name);
-            const quantities = items.map(item => item.quantity);
+        // Get the container type directly from its input field (type="text" name="type")
+        const typeInput = containerDiv.querySelector('input[name="type"]');
+        const containerType = typeInput ? typeInput.value || 'Items' : 'Items';
 
-            new Chart(canvas.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Quantity',
-                            data: quantities,
-                            backgroundColor: quantities.map(q => q >= threshold ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)'),
-                            borderColor: quantities.map(q => q >= threshold ? 'rgba(34,197,94,1)' : 'rgba(239,68,68,1)'),
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Threshold',
-                            type: 'line',
-                            data: Array(quantities.length).fill(threshold),
-                            borderColor: 'red',
-                            borderWidth: 2,
-                            fill: false,
-                            tension: 0
-                        }
-                    ]
-                },
-                options: {
-                    scales: { y: { beginAtZero: true } },
-                    plugins: { legend: { display: true } }
-                }
-            });
+        const labels = [containerType];
+        const quantities = items.map(item => item.quantity);
+
+        new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: containerType, // 👈 use the container's actual type
+                        data: quantities,
+                        backgroundColor: quantities.map(q =>
+                            q >= threshold ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)'
+                        ),
+                        borderColor: quantities.map(q =>
+                            q >= threshold ? 'rgba(34,197,94,1)' : 'rgba(239,68,68,1)'
+                        ),
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Threshold',
+                        type: 'line',
+                        data: Array(quantities.length).fill(threshold),
+                        borderColor: 'red',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0
+                    }
+                ]
+            },
+            options: {
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { display: true } }
+            }
         });
-    </script>
+    });
+</script>
+
 
 </body>
 
