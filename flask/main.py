@@ -89,9 +89,13 @@ def view_data():
 @app.route('/handle-esp32-data', methods=['POST','GET'])
 def handle_esp32_data():
     if request.method == 'POST':
+<<<<<<< Updated upstream
         print(request)
         data = request.args.to_dict()
         print(data)
+=======
+        data = request.get_json()
+>>>>>>> Stashed changes
         if not data or 'password' not in data:
             return "Unauthorized", 401
 
