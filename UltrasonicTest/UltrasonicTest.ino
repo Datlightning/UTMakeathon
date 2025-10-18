@@ -43,8 +43,8 @@ void setup() {
 
 void loop() {
   // Trigger distance sensor
-  long duration = 0
-  float distance = 0.0
+  long duration = 0;
+  float distance = 0.0;
   if(!test) {
     digitalWrite(TRIG_PIN1, LOW);
     delayMicroseconds(2);
@@ -73,8 +73,8 @@ void loop() {
   display.print(text);
   display.display();
 
-  if (buttonPressed) {
-    test= !test
+  if (test) {
+    test = !test;
   }
 
   delay(250);
