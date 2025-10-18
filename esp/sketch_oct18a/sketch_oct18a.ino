@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char* ssid = "Vihas's iPhone";
-const char* password = "l1gHtN1Ng";
+const char* ssid = "VIHASLENOVO";
+const char* password = "vihaslenovo";
 
 void setup() {
   Serial.begin(115200);
@@ -12,7 +12,8 @@ void setup() {
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    Serial.print("Trying to connect to ");
+    Serial.println(ssid);
   }
   Serial.println("\nConnected!");
   

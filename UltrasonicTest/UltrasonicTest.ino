@@ -7,6 +7,7 @@
 #define OLED_RESET    -1 //null
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
+<<<<<<< Updated upstream
 #define TRIG_PIN1 18
 #define ECHO_PIN1 19
 #define TRIG_PIN2 2
@@ -15,6 +16,10 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 bool test = false
 
 #define BUTTON_PIN 5
+=======
+#define TRIG_PIN 18
+#define ECHO_PIN 19
+>>>>>>> Stashed changes
 
 void setup() {
   Serial.begin(115200);

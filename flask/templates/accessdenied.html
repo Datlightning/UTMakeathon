@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta http-equiv="refresh" content="5; URL={{ redirect_url }}">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-10 rounded-lg shadow-lg text-center">
+        <h1 class="text-4xl font-bold text-red-600 mb-4">Access Denied</h1>
+        <p class="text-gray-700 mb-4">You do not have permission to access this page.</p>
+        <p class="text-gray-500">Redirecting you shortly...</p>
+        <a href="{{ redirect_url }}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg">
+            Click here if not redirected
+        </a>
+    </div>
+</body>
+</html>
