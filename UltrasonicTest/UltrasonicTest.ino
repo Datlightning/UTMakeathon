@@ -76,6 +76,8 @@ void loop() {
 
   if (buttonPressed) {
     test = !test;
+    Serial.println(test);
+
     delay(200);
   }
 

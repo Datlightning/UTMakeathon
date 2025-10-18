@@ -16,25 +16,35 @@ void setup() {
     Serial.println(ssid);
   }
   Serial.println("\nConnected!");
-  
+  getData();
+
   // Fetch data from website
+}
+void getData() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin("http://wifitest.adafruit.com/testwifi/index.html");
-    
+
+    // Add the route + query parameter
+    String serverPath = "http://10.145.63.190:5000/handle-esp32-data?password=password123";
+    http.begin(serverPath);
+
+    // Send GET request
     int httpResponseCode = http.GET();
+
     if (httpResponseCode > 0) {
       String payload = http.getString();
       Serial.println("HTTP Response:");
-      Serial.println(payload);  // prints HTML content
+      Serial.println(payload);  // prints JSON or message
     } else {
       Serial.print("Error on HTTP request: ");
       Serial.println(httpResponseCode);
     }
-    http.end();
+
+    http.end();  // Free resources
   }
 }
-
+void sendData() {
+}
 void loop() {
   // Nothing here
 }
