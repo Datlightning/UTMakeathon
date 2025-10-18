@@ -63,7 +63,7 @@ void loop() {
     distance = duration * 0.0343 / 2;
   }
 
-  String text = "Dist: " + String(distance, 1) + " cm";
+  String text = "Dist (" + (test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
   int x = (SCREEN_WIDTH - text.length() * 6) / 2;
 
   display.clearDisplay();
