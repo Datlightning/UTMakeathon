@@ -15,6 +15,10 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define BUTTON_PIN 5
 #define SERVO_PIN 23
 
+#define SERVO_FORWARD 0       // full speed forward
+#define SERVO_STOP 92         // calibrated stop value
+#define DEGREES_PER_SECOND 60 // estimated rotation speed
+
 bool test = false;
 Servo myServo;
 void setup() {
@@ -26,7 +30,6 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   myServo.attach(SERVO_PIN);
-  myServo.write(92); // start at 0 degrees
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println("OLED init failed");
@@ -80,10 +83,9 @@ void loop() {
   }
 
   if (!test && distance > 30) {
-    myServo.write(0);  // rotate to 60 degrees
-    Serial.println("Distance > 30cm: Servo -> 60°");
+    setAngle(90);
   } else {
-    myServo.write(92);   // return to 0 degrees
+    setAngle(0);
   }
 
   String text = String("Dist (") + (!test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
@@ -104,4 +106,20 @@ void debugButtonPress(int pin) {
     Serial.print("Button pressed on GPIO ");
     Serial.println(pin);
   }
+}
+
+void setAngle(int targetAngle) {
+  targetAngle = constrain(targetAngle, 0, 360);
+
+  float durationSec = targetAngle / DEGREES_PER_SECOND;
+  unsigned long durationMs = (unsigned long)(durationSec * 1000);
+
+  myServo.write(SERVO_FORWARD);
+  Serial.print(targetAngle);
+  Serial.print("° for ");
+  Serial.print(durationMs);
+  Serial.println(" ms");
+
+  delay(durationMs);
+  myServo.write(SERVO_STOP); // stop
 }
