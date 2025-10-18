@@ -26,7 +26,7 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   myServo.attach(SERVO_PIN);
-  myServo.write(90); // start at 0 degrees
+  myServo.write(92); // start at 0 degrees
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println("OLED init failed");
@@ -83,7 +83,7 @@ void loop() {
     myServo.write(0);  // rotate to 60 degrees
     Serial.println("Distance > 30cm: Servo -> 60°");
   } else {
-    myServo.write(90);   // return to 0 degrees
+    myServo.write(92);   // return to 0 degrees
   }
 
   String text = String("Dist (") + (!test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
