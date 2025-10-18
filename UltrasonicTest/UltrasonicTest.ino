@@ -45,41 +45,44 @@ void loop() {
   long duration = 0;
   float distance = 0.0;
 
-  static bool lastButtonState = HIGH;
-  bool currentButtonState = digitalRead(BUTTON_PIN);
-  if (lastButtonState == HIGH && currentButtonState == LOW) {
-    test = !test;
-    delay(50);
-  }
-  lastButtonState = currentButtonState;
+  debugButtonPress(5)
+  // }
+  // lastButtonState = currentButtonState;
 
-  if (!test) {
-    digitalWrite(TRIG_PIN1, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG_PIN1, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG_PIN1, LOW);
-    duration = pulseIn(ECHO_PIN1, HIGH, 30000);
-    distance = duration * 0.0343 / 2;
-  } else {
-    digitalWrite(TRIG_PIN2, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG_PIN2, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG_PIN2, LOW);
-    duration = pulseIn(ECHO_PIN2, HIGH, 30000);
-    distance = duration * 0.0343 / 2;
-  }
+  // if (!test) {
+  //   digitalWrite(TRIG_PIN1, LOW);
+  //   delayMicroseconds(2);
+  //   digitalWrite(TRIG_PIN1, HIGH);
+  //   delayMicroseconds(10);
+  //   digitalWrite(TRIG_PIN1, LOW);
+  //   duration = pulseIn(ECHO_PIN1, HIGH, 30000);
+  //   distance = duration * 0.0343 / 2;
+  // } else {
+  //   digitalWrite(TRIG_PIN2, LOW);
+  //   delayMicroseconds(2);
+  //   digitalWrite(TRIG_PIN2, HIGH);
+  //   delayMicroseconds(10);
+  //   digitalWrite(TRIG_PIN2, LOW);
+  //   duration = pulseIn(ECHO_PIN2, HIGH, 30000);
+  //   distance = duration * 0.0343 / 2;
+  // }
 
-  String text = String("Dist (") + (test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
-  int x = (SCREEN_WIDTH - text.length() * 6) / 2;
+  // String text = String("Dist (") + (test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
+  // int x = (SCREEN_WIDTH - text.length() * 6) / 2;
 
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(x, 28);
-  display.print(text);
-  display.display();
+  // display.clearDisplay();
+  // display.setTextSize(1);
+  // display.setTextColor(SSD1306_WHITE);
+  // display.setCursor(x, 28);
+  // display.print(text);
+  // display.display();
 
   delay(250);
+}
+
+void debugButtonPress(int pin) {
+  if (digitalRead(pin) == LOW) {
+    Serial.print("Button pressed on GPIO ");
+    Serial.println(pin);
+  }
 }
