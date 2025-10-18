@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <ESP32Servo.h>  // Use ESP32-compatible Servo library
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -12,9 +13,10 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define TRIG_PIN2 2
 #define ECHO_PIN2 4
 #define BUTTON_PIN 5
+#define SERVO_PIN 23
 
 bool test = false;
-
+Servo myServo;
 void setup() {
   Serial.begin(115200);
   pinMode(TRIG_PIN1, OUTPUT);
@@ -22,6 +24,9 @@ void setup() {
   pinMode(TRIG_PIN2, OUTPUT);
   pinMode(ECHO_PIN2, INPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  myServo.attach(SERVO_PIN);
+  myServo.write(90); // start at 0 degrees
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println("OLED init failed");
@@ -74,7 +79,14 @@ void loop() {
     distance = duration * 0.0343 / 2;
   }
 
-  String text = String("Dist (") + (test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
+  if (!test && distance > 30) {
+    myServo.write(0);  // rotate to 60 degrees
+    Serial.println("Distance > 30cm: Servo -> 60°");
+  } else {
+    myServo.write(90);   // return to 0 degrees
+  }
+
+  String text = String("Dist (") + (!test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
   int x = (SCREEN_WIDTH - text.length() * 6) / 2;
 
   display.clearDisplay();
