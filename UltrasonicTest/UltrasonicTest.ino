@@ -45,6 +45,14 @@ void loop() {
   long duration = 0;
   float distance = 0.0;
 
+  static bool lastButtonState = HIGH;
+  bool currentButtonState = digitalRead(BUTTON_PIN);
+  if (lastButtonState == HIGH && currentButtonState == LOW) {
+    test = !test;
+    delay(50);
+  }
+  lastButtonState = currentButtonState;
+
   if (!test) {
     digitalWrite(TRIG_PIN1, LOW);
     delayMicroseconds(2);
@@ -72,14 +80,6 @@ void loop() {
   display.setCursor(x, 28);
   display.print(text);
   display.display();
-
-  
-  bool buttonPressed = digitalRead(BUTTON_PIN) == LOW;
-  if (buttonPressed) {
-    test = !test;
-    delay(200);
-    while (digitalRead(BUTTON_PIN) == LOW); // wait for release
-  }
 
   delay(250);
 }
