@@ -17,7 +17,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 #define SERVO_FORWARD 0       // full speed forward
 #define SERVO_STOP 92         // calibrated stop value
-#define DEGREES_PER_SECOND 65 // estimated rotation speed
+#define DEGREES_PER_SECOND 75 // estimated rotation speed
 
 bool test = false;
 Servo myServo;
