@@ -14,7 +14,6 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define BUTTON_PIN 5
 
 bool test = false;
-bool buttonPressed = digitalRead(BUTTON_PIN) == LOW;
 
 void setup() {
   Serial.begin(115200);
@@ -74,11 +73,12 @@ void loop() {
   display.print(text);
   display.display();
 
+  
+  bool buttonPressed = digitalRead(BUTTON_PIN) == LOW;
   if (buttonPressed) {
     test = !test;
-    Serial.println(test);
-
     delay(200);
+    while (digitalRead(BUTTON_PIN) == LOW); // wait for release
   }
 
   delay(250);
