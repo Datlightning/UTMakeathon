@@ -17,7 +17,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 #define SERVO_FORWARD 0       // full speed forward
 #define SERVO_STOP 92         // calibrated stop value
-#define DEGREES_PER_SECOND 85 // estimated rotation speed
+#define DEGREES_PER_SECOND 65 // estimated rotation speed
 
 bool test = false;
 Servo myServo;
@@ -84,8 +84,10 @@ void loop() {
 
   if (!test && distance > 30) {
     setAngle(90);
+    delay(250);
   } else {
     setAngle(0);
+    delay(250);
   }
 
   String text = String("Dist (") + (!test ? "THT" : "FLT") + "): " + String(distance, 1) + " cm";
